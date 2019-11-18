@@ -4,6 +4,7 @@
 	  		<el-col :span="4"  style="min-height: 100%; background-color: #324057;">
 				<el-menu :default-active="defaultActive" style="min-height: 100%;" theme="dark" router>
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
+                    <el-menu-item index="depth"><i class="el-icon-setting"></i><span slot="title">行情深度</span></el-menu-item>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>数据管理</template>
 						<el-menu-item index="userList">用户列表</el-menu-item>
@@ -61,6 +62,6 @@
 <style lang="less" scoped>
 	@import '../style/mixin';
 	.manage_page{
-		
+
 	}
 </style>

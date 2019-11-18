@@ -8,6 +8,8 @@ import 'element-ui/lib/theme-default/index.css'
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+const API = require('../config/api_list');
+window.API = API;
 
 new Vue({
 	el: '#app',
