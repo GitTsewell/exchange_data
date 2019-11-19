@@ -24,7 +24,8 @@ func DepthIndex(c *gin.Context)  {
 	keys,_ := redis.Keys(key).Result()
 
 	now := time.Now().UnixNano() / 1e6
-	depth := []interface{}{}
+
+	list := []map[string]interface{}{}
 	for _,v := range keys{
 		rst ,_ := redis.HMGet(v,"average_price","microtime").Result()
 		// status
@@ -35,16 +36,24 @@ func DepthIndex(c *gin.Context)  {
 		}
 		// symbol
 		spli := strings.Split(v,":")
-		rst = append(rst,spli[3],status)
 
 		// time
 		rst[1],_ = tool.MsToTime(rst[1].(string))
 
-		depth = append(depth,rst)
+		raw := map[string]interface{}{
+			"symbol":spli[3],
+			"price":rst[0],
+			"tag":spli[2],
+			"time": rst[1],
+			"status":status,
+		}
+
+		list = append(list,raw)
 	}
 
 	c.JSON(200,gin.H{
-		"list":depth,
+		"data":list,
+		"status":1,
 	})
 
 }
@@ -143,9 +152,20 @@ func DepthCheck(c *gin.Context)  {
 
 	a1 = append(a1,a2...)
 
+	list := []map[string]interface{}{}
+	for _,v1 := range a1{
+		status := 0
+		for _,v2 := range a3{
+			if v1 == v2 {
+				status = 1
+			}
+		}
+		list = append(list,map[string]interface{}{"symbol":v1,"status":status})
+	}
+
 	c.JSON(200,gin.H{
-		"tmp":a1,
-		"test":a3,
+		"status":1,
+		"data":list,
 	})
 }
 

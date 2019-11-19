@@ -94,7 +94,9 @@ const routes = [
 		},{
             path: '/depth',
             component: depth,
-            meta: ['行情', '平台'],
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+            }
         }]
 	}
 ]
