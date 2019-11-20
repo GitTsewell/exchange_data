@@ -132,9 +132,13 @@ func DepthUpdate(c *gin.Context)  {
 	tmpKey := fmt.Sprintf("tmp:depth:%s",platform)
 	redis.Del(tmpKey)
 
+	c.JSON(200,gin.H{
+		"status":1,
+	})
+
 	tmpDepth(&spot,&future)
 
-	c.JSON(200,gin.H{"status":true})
+
 }
 
 func DepthCheck(c *gin.Context)  {

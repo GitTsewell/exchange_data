@@ -60,7 +60,7 @@
                     </div>
                 </el-dialog>
 
-            <el-table ref="filterTable" :data="tableData" style="width: 100%">
+            <el-table ref="filterTable" :data="tableData" style="width: 100%" >
                 <el-table-column label="序号" width="100">
                     <template slot-scope="scope">
                         {{scope.$index+1}}
@@ -106,16 +106,7 @@
                 dialogTableVisible:false,
                 indexId: '',
                 checkId: '',
-                wsdata:[{
-                    symbol:"BTC-USDT",
-                    status:1
-                },{
-                    symbol:"BCH-USDT",
-                    status:0
-                },{
-                    symbol:"BTC-USD-1911227",
-                    status:1
-                }],
+                wsdata:[],
                 tableData: []
             }
         },
@@ -131,17 +122,31 @@
             },
             // 编辑
             handleEdit() {
+                clearInterval(this.indexId);
                 this.dialogFormVisible = true;
             },
 
             WsConnect() {
                 this.dialogFormVisible = false;
-                this.dialogTableVisible = true
+                this.dialogTableVisible = true;
+                this.sendWsConnect();
+                this.checkId = setInterval(this.WsCheck,1000)
             },
 
             // 点击切换平台
             handleClick(tab, event) {
                 this.$options.methods.getList.bind(this)()
+            },
+
+            // 增加一行
+            addRow() {
+                this.tableData.push({
+                    symbol:""
+                })
+            },
+            // 删除一行
+            reduceRow(index) {
+                this.tableData.splice(index,1)
             },
 
             // list 请求
@@ -155,7 +160,36 @@
                     })
             },
             WsCheck() {
+                var url = '/depth/check/' + this.activeName;
+                this.$http.get(url)
+                    .then(response => {
+                        this.wsdata = response.data.data
+                    })
+            },
 
+            sendWsConnect() {
+                var url = '/depth/' + this.activeName;
+
+                var data = [];
+                for (var i = 0;i< this.tableData.length;i++) {
+                    data[i] = this.tableData[i].symbol
+                }
+                this.$http.put(url,{symbols:data})
+                    .then(response => {
+                        console.log(response)
+                    })
+            },
+
+            commit() {
+                clearInterval(this.checkId);
+                var url = '/depth/commit?platform=' + this.activeName;
+                this.$http.get(url)
+                    .then(response => {
+                        if (response.data.status == true) {
+                            this.$message.success('配置提交成功,在重启ws客户端进程后生效');
+                            this.dialogTableVisible = false;
+                        }
+                    })
             }
         }
     }

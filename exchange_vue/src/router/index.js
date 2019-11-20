@@ -21,6 +21,7 @@ const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'a
 const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
 const depth = r => require.ensure([], () => r(require('@/page/depth')), 'depth');
+const system = r => require.ensure([], () => r(require('@/page/system')), 'system');
 
 const routes = [
 	{
@@ -94,6 +95,12 @@ const routes = [
 		},{
             path: '/depth',
             component: depth,
+            meta: {
+                requireAuth: true,  // 该路由项需要权限校验
+            }
+        },{
+            path: '/system',
+            component: system,
             meta: {
                 requireAuth: true,  // 该路由项需要权限校验
             }
