@@ -13,8 +13,8 @@
                 </div>
 
                 <div style="float:right;margin-right: 10px;margin-bottom: 10px">
-                    <el-button type="warning" @click="handleRestart('local')" >重启本机</el-button>
-                    <el-button type="danger" @click="handleRestart('other')" >重启其他</el-button>
+                    <el-button type="warning" @click="systemExec('config:system:restart_local_ws')" >重启本机</el-button>
+                    <el-button type="danger" @click="systemExec('config:system:restart_other_ws')" >重启其他</el-button>
                 </div>
 
                 <el-dialog title="编辑平台数据" :visible.sync="dialogFormVisible">
@@ -107,7 +107,7 @@
                 indexId: '',
                 checkId: '',
                 wsdata:[],
-                tableData: []
+                tableData: [],
             }
         },
         components: {
@@ -178,6 +178,23 @@
                     .then(response => {
                         console.log(response)
                     })
+            },
+
+            systemExec(key) {
+                this.$confirm('确认重启吗','提示',{
+                    confirmButtonText : "确认",
+                    cancelButtonText : "取消",
+                    type : "warning"
+                }).then(() => {
+                    var url = '/system/' + key;
+                    this.$http.get(url)
+                        .then(response => {
+                            if (response.data.status == 1) {
+                                this.$message.success('重启成功')
+                            }
+                        })
+                    }
+                )
             },
 
             commit() {

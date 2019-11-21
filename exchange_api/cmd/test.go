@@ -1,14 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"exchange_api/db"
+	"fmt"
+)
 
 func main() {
-	arr := [8]int{0,1,2,3,4,5,6,7}
+	redis := db.InitRedis()
+	defer redis.Close()
 
-	spl := arr[2:5]
+	if a,_ :=redis.Set("asdasd","asdasd",0).Result();a == "OK" {
+		fmt.Println(111)
+	}else {
+		fmt.Println(222)
+	}
 
-	fmt.Println(spl)
-	fmt.Println(len(spl))
-	fmt.Println(cap(spl))
+	a := []map[string]interface{}{}
+	
+
 
 }

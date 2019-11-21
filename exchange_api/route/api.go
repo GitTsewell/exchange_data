@@ -22,5 +22,9 @@ func InitRoute() *gin.Engine {
 	auth.GET("/depth/check/:platform",app.DepthCheck)
 	auth.GET("/depth/commit",app.DepthCommit)
 
+	auth.GET("/system",app.SystemIndex)
+	auth.PUT("/system",app.SystemUpdate)
+	auth.GET("/system/:key",app.SystemExec)
+
 	return r
 }

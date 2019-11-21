@@ -3,11 +3,11 @@
 	  	<transition name="form-fade" mode="in-out">
 	  		<section class="form_contianer" v-show="showLogin">
 		  		<div class="manage_tip">
-		  			<p>elm后台管理系统</p>
+		  			<p>数字货币行情数据</p>
 		  		</div>
 		    	<el-form :model="loginForm" :rules="rules" ref="loginForm">
 					<el-form-item prop="username">
-						<el-input v-model="loginForm.username" placeholder="用户名"><span>dsfsf</span></el-input>
+						<el-input v-model="loginForm.username" placeholder="用户名"><span></span></el-input>
 					</el-form-item>
 					<el-form-item prop="password">
 						<el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
@@ -62,7 +62,7 @@
                                 if (response.data.status == 1) {
                                     window.localStorage['token'] = response.data.data.token;
                                     this.$message.success('登录成功');
-                                    this.$router.push('manage');
+                                    this.$router.push('depth');
                                 }else {
                                     this.$message.error('账号或密码错误')
                                 }
@@ -78,17 +78,17 @@
 				});
 			},
 		},
-		watch: {
-			adminInfo: function (newValue){
-				if (newValue.id) {
-					this.$message({
-                        type: 'success',
-                        message: '检测到您之前登录过，将自动登录'
-                    });
-					this.$router.push('manage')
-				}
-			}
-		}
+		// watch: {
+		// 	adminInfo: function (newValue){
+		// 		if (newValue.id) {
+		// 			this.$message({
+        //                 type: 'success',
+        //                 message: '检测到您之前登录过，将自动登录'
+        //             });
+		// 			this.$router.push('manage')
+		// 		}
+		// 	}
+		// }
 	}
 </script>
 
