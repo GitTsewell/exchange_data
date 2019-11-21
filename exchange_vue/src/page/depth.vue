@@ -18,8 +18,8 @@
                 </div>
 
                 <el-dialog title="编辑平台数据" :visible.sync="dialogFormVisible">
-                    <el-form :model="depth" :data="tableData">
-                        <el-form-item label="币种对" label-width="100px" v-for="(i,index) in tableData">
+                    <el-form :model="depth" :data="editData">
+                        <el-form-item label="币种对" label-width="100px" v-for="(i,index) in editData">
                             <el-col :span="11"style="margin-left: 10px">
                                 <el-input placeholder="输入币种对" v-model="i.symbol"></el-input>
                             </el-col>
@@ -108,6 +108,7 @@
                 checkId: '',
                 wsdata:[],
                 tableData: [],
+                editData: [],
             }
         },
         components: {
@@ -122,7 +123,12 @@
             },
             // 编辑
             handleEdit() {
-                clearInterval(this.indexId);
+                if (this.tableData.length != 0) {
+                    this.editData = this.tableData;
+                }else {
+                    this.editData = [{symbol:""}]
+                }
+
                 this.dialogFormVisible = true;
             },
 
@@ -140,13 +146,13 @@
 
             // 增加一行
             addRow() {
-                this.tableData.push({
+                this.editData.push({
                     symbol:""
                 })
             },
             // 删除一行
             reduceRow(index) {
-                this.tableData.splice(index,1)
+                this.editData.splice(index,1)
             },
 
             // list 请求
@@ -171,8 +177,8 @@
                 var url = '/depth/' + this.activeName;
 
                 var data = [];
-                for (var i = 0;i< this.tableData.length;i++) {
-                    data[i] = this.tableData[i].symbol
+                for (var i = 0;i< this.editData.length;i++) {
+                    data[i] = this.editData[i].symbol
                 }
                 this.$http.put(url,{symbols:data})
                     .then(response => {
