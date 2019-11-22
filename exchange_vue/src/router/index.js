@@ -5,7 +5,6 @@ Vue.use(Router)
 
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
-const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const depth = r => require.ensure([], () => r(require('@/page/depth')), 'depth');
 const system = r => require.ensure([], () => r(require('@/page/system')), 'system');
 
@@ -19,10 +18,6 @@ const routes = [
 		component: manage,
 		name: '',
 		children: [{
-			path: '',
-			component: home,
-			meta: [],
-		},{
             path: '/depth',
             component: depth,
             meta: {
