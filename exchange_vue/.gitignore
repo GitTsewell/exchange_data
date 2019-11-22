@@ -10,3 +10,4 @@ selenium-debug.log
 package-lock.json
 .DS_Store
 manage/
+package.json
