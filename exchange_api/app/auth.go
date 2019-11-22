@@ -14,10 +14,6 @@ type account struct {
 	Password string	`form:"password" binding:"required"`
 }
 
-func LoginIndex(c *gin.Context)  {
-	c.HTML(200,"login.html",gin.H{})
-}
-
 func LoginPost(c *gin.Context)  {
 	redis := db.InitRedis()
 	defer redis.Close()
@@ -29,18 +25,26 @@ func LoginPost(c *gin.Context)  {
 		return
 	}
 
-	_ = c.Request.ParseForm()
-	hash,_ := redis.Get("admin:account:"+params.Username).Result()
-	pass ,_ := tool.AesDecrypt(hash)
-	if pass != params.Password {
-		c.JSON(200,gin.H{
-			"status": -1,
-			"msg":"账号或密码错误",
-		})
-		return
-	}
+	key := "admin:account:*"
+	keys ,_ :=redis.Keys(key).Result()
+	if len(keys) == 0 {
+		hash,_ := tool.AesEncrypt(params.Password)
+		_ = redis.Set("admin:account:"+params.Username,hash,0)
 
-	generateToken(c,params)
+		generateToken(c,params)
+	}else {
+		hash,_ := redis.Get("admin:account:"+params.Username).Result()
+		pass ,_ := tool.AesDecrypt(hash)
+		if pass != params.Password {
+			c.JSON(200,gin.H{
+				"status": -1,
+				"msg":"账号或密码错误",
+			})
+			return
+		}
+
+		generateToken(c,params)
+	}
 }
 
 // 生成令牌
