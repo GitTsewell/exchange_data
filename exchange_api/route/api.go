@@ -26,5 +26,8 @@ func InitRoute() *gin.Engine {
 	auth.PUT("/system",app.SystemUpdate)
 	auth.GET("/system/:key",app.SystemExec)
 
+	auth.GET("/exchange",app.ExchangeEdit)
+	auth.PUT("/exchange",app.ExchangeUpdate)
+
 	return r
 }

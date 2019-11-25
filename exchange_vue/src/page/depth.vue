@@ -9,7 +9,7 @@
                 <el-tab-pane label="币安" name="binance"></el-tab-pane>
 
                 <div style="float:left;margin-left: 10px;margin-bottom: 10px">
-                    <el-button type="primary" @click="handleEdit()" >深度编辑</el-button>
+                    <el-button type="primary" @click="handleEdit()" >编辑</el-button>
                 </div>
 
                 <div style="float:right;margin-right: 10px;margin-bottom: 10px">

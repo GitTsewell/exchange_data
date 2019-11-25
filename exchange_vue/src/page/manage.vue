@@ -4,6 +4,7 @@
 	  		<el-col :span="4"  style="min-height: 100%; background-color: #324057;">
 				<el-menu :default-active="defaultActive" style="min-height: 100%;" theme="dark" router>
                     <el-menu-item index="depth"><i class="el-icon-star-on"></i><span slot="title">行情深度</span></el-menu-item>
+                    <el-menu-item index="exchange"><i class="el-icon-information"></i><span slot="title">交易所状态</span></el-menu-item>
                     <el-menu-item index="system"><i class="el-icon-setting"></i><span slot="title">系统设置</span></el-menu-item>
 				</el-menu>
 			</el-col>
