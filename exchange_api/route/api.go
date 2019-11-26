@@ -2,6 +2,7 @@ package route
 
 import (
 	"exchange_api/app"
+	"exchange_api/middleware"
 	"exchange_api/tool"
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +10,7 @@ import (
 func InitRoute() *gin.Engine {
 	r := gin.Default()
 	r.Use(Cors()) // 跨域
+	r.Use(middleware.LoggerToFile()) // 日志
 
 	r.POST("/login",app.LoginPost)
 
