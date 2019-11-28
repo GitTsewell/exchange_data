@@ -96,6 +96,7 @@ func (hbws *HuobiWs) depthToDb ()  {
 	}
 
 	hbws.redis.HMSet(key,rst)
+	hbws.redis.Expire(key,time.Minute * 5)
 }
 
 func (hbws *HuobiWs) HuobiDepthTmp (msg []byte)  {

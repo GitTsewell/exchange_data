@@ -99,6 +99,7 @@ func (okws *OkexWs) depthToDb ()  {
 	}
 
 	okws.redis.HMSet(key,rst)
+	okws.redis.Expire(key,time.Minute * 5)
 }
 
 func (okws *OkexWs) OkexDepthTmp(msg []byte)  {

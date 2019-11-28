@@ -79,6 +79,7 @@ func (baws *BinanceWs) depthToDb ()  {
 	key := fmt.Sprintf("binance:depth:0:%s",symbol)
 
 	baws.redis.HMSet(key,rst)
+	baws.redis.Expire(key,time.Minute * 5)
 }
 
 func (baws *BinanceWs) BinanceDepthTmp(msg []byte)  {

@@ -83,6 +83,7 @@ func (btws *BitmexWs) depthToDb ()  {
 	key := fmt.Sprintf("bitmex:depth:1:%s",btws.depthData.Data[0].Symbol)
 
 	btws.redis.HMSet(key,rst)
+	btws.redis.Expire(key,time.Minute * 5)
 }
 
 func (btws *BitmexWs) BitmexDepthTmp(msg []byte)  {
