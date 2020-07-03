@@ -1,17 +1,18 @@
 package db
 
 import (
-	"exchange_api/config"
+	"exchange_api/cfg"
+
 	"github.com/go-redis/redis"
 )
 
-func InitRedis() *redis.Client{
+func InitRedis() *redis.Client {
+	redisConf := cfg.GetStringMap("redis")
 	client := redis.NewClient(&redis.Options{
-		Addr:     config.REDIS_HOSTS + ":" + config.REDIS_PORT,
-		Password: config.REDIS_PASSWORD, // no password set
-		DB:       config.REDIS_DB,  // use default DB
+		Addr:     redisConf["host"].(string) + ":" + redisConf["port"].(string),
+		Password: redisConf["auth"].(string), // no password set
+		DB:       redisConf["db"].(int),      // use default DB
 	})
 
 	return client
 }
-
