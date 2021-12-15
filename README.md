@@ -22,6 +22,6 @@
     yarn run dev
     访问 localhost:8002
 ```
-请愉快食用~
+请愉快食用~!
 
 
