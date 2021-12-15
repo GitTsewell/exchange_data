@@ -21,7 +21,7 @@ func LoginPost(c *gin.Context)  {
 	var params account
 
 	if err := c.ShouldBindJSON(&params); err != nil {
-		c.JSON(200,gin.H{"error":err})
+		c.JSON(200,gin.H{"error":err}) 
 		return
 	}
 
@@ -86,6 +86,6 @@ func generateToken(c *gin.Context, account account ) {
 
 // LoginResult 登录结果结构
 type LoginResult struct {
-	Token string `json:"token"`
+	Token    string `json:"token"`
 	Username string `json:"username"`
 }
